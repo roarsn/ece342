@@ -168,7 +168,7 @@ void SysTick_Handler(void)
 void EXTI4_IRQHandler(void)//col 0
 {
   // Your code here
-	if(HAL_GPIO_ReadPin(COL1_GPIO_Port, COL1_Pin))
+	if(HAL_GPIO_ReadPin(COL0_GPIO_Port, COL0_Pin))
 		current_col=0;
 
   HAL_GPIO_EXTI_IRQHandler(COL0_Pin);
