@@ -4,6 +4,7 @@
 "lab01\stm32f4xx_it.o"
 "lab01\stm32f4xx_hal_msp.o"
 "lab01\config.o"
+"lab01\operations.o"
 "lab01\stm32f4xx_hal_tim.o"
 "lab01\stm32f4xx_hal_tim_ex.o"
 "lab01\stm32f4xx_hal_uart.o"

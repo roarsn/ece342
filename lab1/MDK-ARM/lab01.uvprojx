@@ -415,6 +415,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\Src\config.c</FilePath>
             </File>
+            <File>
+              <FileName>operations.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\operations.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

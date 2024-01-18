@@ -1,4 +1,4 @@
-lab01/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
+lab01/operations.o: ..\Core\Src\operations.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -32,5 +32,5 @@ lab01/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h \
-  ..\Core\Inc\config.h C:\Keil_v5\ARM\ARMCLANG\include\stdio.h \
-  ..\Core\Inc\operations.h
+  C:\Keil_v5\ARM\ARMCLANG\include\string.h ..\Core\Inc\operations.h \
+  ..\Core\Inc\config.h C:\Keil_v5\ARM\ARMCLANG\include\stdio.h
