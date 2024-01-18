@@ -40,6 +40,7 @@ int main(void)
   print_msg(message); //UART transmit
 	
 	int8_t key_pressed;
+	char key_pressed_c;
 	int8_t row=0;
 	int8_t col=0;
 
@@ -65,9 +66,15 @@ int main(void)
 			HAL_Delay(10);
 			if (current_col>-1){
 				current_row=0;
-				sprintf(message, "\nRow: %d \nCol: %d", current_row, current_col);
-				//sprintf(message, "Key pressed: %d \n", key_pressed);
+				sprintf(message, "\nRow: %d Col: %d ", current_row, current_col);
 				print_msg(message);
+				
+				key_pressed_c=(current_row*4)+current_col+'0';
+				if(key_pressed_c>57)
+					key_pressed_c=key_pressed_c+39;
+				sprintf(message, "Key pressed: %c \n", key_pressed_c);
+				print_msg(message);
+				
 				current_col=-1;
 			}
 			HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, GPIO_PIN_RESET);
@@ -76,9 +83,15 @@ int main(void)
 			HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, GPIO_PIN_SET);
 			if (current_col>-1){
 				current_row=1;
-				sprintf(message, "\nRow: %d \nCol: %d", current_row, current_col);
-				//sprintf(message, "Key pressed: %d \n", key_pressed);
+				sprintf(message, "\nRow: %d Col: %d ", current_row, current_col);
 				print_msg(message);
+				
+				key_pressed_c=(current_row*4)+current_col+'0';
+				if(key_pressed_c>57)
+					key_pressed_c=key_pressed_c+39;
+				sprintf(message, "Key pressed: %c \n", key_pressed_c);
+				print_msg(message);
+				
 				current_col=-1;
 			}
 			HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, GPIO_PIN_RESET);
@@ -87,9 +100,15 @@ int main(void)
 			HAL_GPIO_WritePin(ROW2_GPIO_Port, ROW2_Pin, GPIO_PIN_SET);
 			if (current_col>-1){
 				current_row=2;
-				sprintf(message, "\nRow: %d \nCol: %d", current_row, current_col);
-				//sprintf(message, "Key pressed: %d \n", key_pressed);
+				sprintf(message, "\nRow: %d Col: %d ", current_row, current_col);
 				print_msg(message);
+				
+				key_pressed_c=(current_row*4)+current_col+'0';
+				if(key_pressed_c>57)
+					key_pressed_c=key_pressed_c+39;
+				sprintf(message, "Key pressed: %c \n", key_pressed_c);
+				print_msg(message);
+				
 				current_col=-1;
 			}
 			HAL_GPIO_WritePin(ROW2_GPIO_Port, ROW2_Pin, GPIO_PIN_RESET);
@@ -98,17 +117,20 @@ int main(void)
 			HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, GPIO_PIN_SET);
 			if (current_col>-1){
 				current_row=3;
-				sprintf(message, "\nRow: %d \nCol: %d", current_row, current_col);
-				//sprintf(message, "Key pressed: %d \n", key_pressed);
+				sprintf(message, "\nRow: %d Col: %d ", current_row, current_col);
 				print_msg(message);
+				
+				key_pressed_c=(current_row*4)+current_col+'0';
+				if(key_pressed_c>57)
+					key_pressed_c=key_pressed_c+39;
+				sprintf(message, "Key pressed: %c \n", key_pressed_c);
+				print_msg(message);
+				
 				current_col=-1;
 			}
 			HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, GPIO_PIN_RESET);
 			HAL_Delay(100);
 			
-		row=current_row+1;
-		col=current_col+1;
-		key_pressed=row*row*col-1;
 		
 		
 		//row1 not showing up, row1 keypad is row2 and row2 keypad is row3 and row3 keypad is nothing

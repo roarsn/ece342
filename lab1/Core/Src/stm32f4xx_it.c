@@ -170,7 +170,9 @@ void EXTI4_IRQHandler(void)//col 0
   // Your code here
 	if(HAL_GPIO_ReadPin(COL0_GPIO_Port, COL0_Pin))
 		current_col=0;
-
+	
+	current_col=(current_col-3)*-1;
+	
   HAL_GPIO_EXTI_IRQHandler(COL0_Pin);
 }
 
@@ -187,6 +189,8 @@ void EXTI9_5_IRQHandler(void)// col 1-3
 		current_col=2;
 	if(HAL_GPIO_ReadPin(COL3_GPIO_Port, COL3_Pin))
 		current_col=3;
+	
+	current_col=(current_col-3)*-1;
 	
 	HAL_GPIO_EXTI_IRQHandler(COL1_Pin);
   HAL_GPIO_EXTI_IRQHandler(COL2_Pin);
