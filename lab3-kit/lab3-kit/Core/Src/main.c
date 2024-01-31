@@ -33,6 +33,8 @@
 
 extern int *sin_LUT; 
 
+#define PI = 3.1415926;
+
 
 
 int main(void)
@@ -99,11 +101,14 @@ int main(void)
     HAL_Delay(50);
 		HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
 		timer= __HAL_TIM_GET_COUNTER(&htim6);
+    //I'm sorry the way you had your for loops setup was confusing me
 		for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-		//for (int i=0;i<max_count;i++){
-			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
-			//HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
-		}timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;
+		  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
+    }
+    // for (int i=0;i<max_count;i++){
+    // 	HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
+		// }
+    timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;
 		sprintf(message, "time: %d \n", timer);
 		print_msg(message); //UART transmit	
 		
@@ -112,3 +117,14 @@ int main(void)
 	free(sin_LUT);
 }
 #pragma GCC pop_options
+
+
+
+double squareWave(int max, double x){
+  double fX = 0.5;
+  for(int n = 0 ; n < max ; n++){
+    fX += (2 / PI) * (1 / ((2 * n) + 1)) * sin(((2 * n)+1)*x);
+  }
+  return fX;
+}
+
