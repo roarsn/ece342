@@ -33,10 +33,10 @@
 
 extern int *sin_LUT; 
 
+
+
 int main(void)
 {
-  
-	sin_LUT=malloc(1000*sizeof(int));
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
@@ -54,6 +54,20 @@ int main(void)
   sprintf(message, "Printing test\n");
   print_msg(message); //UART transmit
 	
+	//part 2.2
+	int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
+	int count=0;
+	int *sin_LUT=malloc(max_count*sizeof(double));
+	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
+			sin_LUT[count]=sin(theta);
+			
+			sprintf(message,"max count: %d \n count: %d sintheta: %lf\n",max_count, count, sin(theta));
+			print_msg(message);
+			count++;
+	}
+	
+	
+	
 	uint32_t timer=0;
 	HAL_TIM_Base_Start(&htim6); //adjust the prescalar for TIM6 in config
 	
@@ -62,7 +76,8 @@ int main(void)
 	//sprintf(message,"timer: %d\n",timer);
 	//print_msg(message);
 	
-	int count=0;
+	/*//part 1
+	count=0;
 	for(int i=1;i<100;i++)
 		count+=(i-1);
 	HAL_TIM_Base_Start(&htim6);//REPEATING THIS HERE MAKES 4 TO 14 COUNT
@@ -70,6 +85,7 @@ int main(void)
 	
 	sprintf(message,"count: %d timer: %d\n",count,timer);
 	print_msg(message);
+	*/
 	
 	HAL_DAC_Init(&hdac);
   HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
@@ -82,14 +98,13 @@ int main(void)
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     HAL_Delay(50);
 		HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-		timer=0;
+		timer= __HAL_TIM_GET_COUNTER(&htim6);
 		for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			sinoutput=(int)nearbyint(sin(theta));
+		//for (int i=0;i<max_count;i++){
 			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
-			sprintf(message, "Sinoutput %d %lf\n", sinoutput, sin(theta));
-			//print_msg(message); //UART transmit	
+			//HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
 		}timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;
-		sprintf(message, "timer %d \n", timer);
+		sprintf(message, "time: %d \n", timer);
 		print_msg(message); //UART transmit	
 		
 	
