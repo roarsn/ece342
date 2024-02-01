@@ -30,103 +30,57 @@
   * @brief  The application entry point.
   * @retval int
   */
-	
+
 #define PI 3.1415926
 #define MAXIMUM 100000
 
-extern double *sin_LUT; 
-extern double *square_LUT; 
-extern double *saw_LUT; 
-extern double *triangle_LUT; 
+//Globals
+float* sin_LUT;
+float *square_LUT;
+float *saw_LUT;
+float *triangle_LUT;
+
+double produceSin(double x);
 
 int8_t fs_terms=1; //make sure this works with xx_it extern var
 
 double squareWave(int max, double x){
   double fX = 0.5;
-  for(int n = 0 ; n < max ; n++){
-    fX += (2 / PI) * (1 / ((2 * n) + 1)) * sin(((2 * n)+1)*x);
+  for(double n = 0 ; n < max ; n += 1.0){
+    fX += (2.0 / PI) * (1.0 / ((2.0 * n) + 1.0)) * sin(((2.0 * n)+1.0)*x);
   }
   return fX;
+}
+double produceSquare(double x) {
+return 1000 * squareWave(10, x) + 1100;
 }
 
 double sawTooth(int max, double x){
   double fX = 0.5;
-  for(int n = 1 ; n < max ; n++){
-    fX -= (1 / PI) * (1 / n) * sin(n * x);
+  for(double n = 1 ; n < max ; n++){
+    fX -= (1.0 / PI) * (1.0 / n) * sin(n * x);
   }
   return fX;
+}
+double produceSaw(double x) {
+return 1000 * sawTooth(10, x) + 1100;
 }
 
 double triangleWave(int max, double x){
   double fX = 0.5;
-  for(int n = 0 ; n < max ; n++){
-    fX += (4 / pow(PI, 2)) * (pow(-1, n) / pow(((2*n) + 1), 2)) * sin((2*n + 1)* x);
+  for(double n = 0 ; n < max ; n++){
+    fX += (4.0 / pow(PI, 2)) * (pow(-1, n) / pow(((2*n) + 1), 2)) * sin((2*n + 1)* x);
   }
   return fX;
 }
-
-void squareLUT(int max, double x){
-  int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
-	int count=0;
-	double *square_LUT=malloc(max_count*sizeof(double));
-	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			square_LUT[count]=squareWave(0, theta);
-			count++;
-	}
-  //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; n++){
-    for (int i = 0; i < max_count; i++) {
-      double square_nx = square_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * square_LUT[i];
-      printf("square(%dx) at index %d: %f\n", n, i, square_nx);
-    }
-  }
-  free(square_LUT);
+double produceTriangle(double x) {
+return 1000 * triangleWave(10, x) + 1100;
 }
-
-void sawLUT(int max, double x){
-  int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
-	int count=0;
-	double *saw_LUT=malloc(max_count*sizeof(double));
-	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			saw_LUT[count]=sawTooth(0, theta);
-			count++;
-	}
-  //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; n++){
-    for (int i = 0; i < max_count; i++) {
-      double saw_nx = saw_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * saw_LUT[i];
-      printf("saw(%dx) at index %d: %f\n", n, i, saw_nx);
-    }
-  }
-  free(saw_LUT);
-}
-
-void triangleLUT(int max, double x){
-  int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
-	int count=0;
-	double *triangle_LUT=malloc(max_count*sizeof(double));
-	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			triangle_LUT[count]=triangleWave(0, theta);
-			count++;
-	}
-  //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; n++){
-    for (int i = 0; i < max_count; i++) {
-      double triangle_nx = triangle_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * triangle_LUT[i];
-      printf("triangle(%dx) at index %d: %f\n", n, i, triangle_nx);
-    }
-  }
-  free(triangle_LUT);
-}
-
-
-
-
 
 
 int main(void)
 {
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* Configure the system clock */
@@ -137,88 +91,88 @@ int main(void)
   MX_DAC_Init();
   MX_TIM6_Init();
   MX_USART3_Init();
-	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	fs_terms=1;
-	
-	char message[100];
+HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+fs_terms=1;
+
+char message[100];
   sprintf(message, "Printing test\n");
   print_msg(message); //UART transmit
-	
-	//part 2.2
-	int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
-	//int count=0;
-	double* sin_LUT=malloc(max_count*sizeof(double));
-	double theta;
-	for(int count=0; count<=max_count; count++){
-		theta	=(double)count/100;
-		//sin_LUT[count]=(sin(theta)+1)*4096/2;
-		sin_LUT[count]=sin(theta); 
-			//sprintf(message,"max count: %d \n count: %d sintheta: %d\n",max_count, count, sin_LUT[count]);
-			//print_msg(message);
-	}
-	
-	
-	
-	uint32_t timer=0;
-	HAL_TIM_Base_Start(&htim6); //adjust the prescalar for TIM6 in config
-	
-	//if(status==HAL_OK)
-	timer = __HAL_TIM_GET_COUNTER(&htim6); //returns TIMx_CNT a 16 or 32 bit int register value
-	//sprintf(message,"timer: %d\n",timer);
-	//print_msg(message);
-	
-	/*//part 1
-	count=0;
-	for(int i=1;i<100;i++)
-		count+=(i-1);
-	HAL_TIM_Base_Start(&htim6);//REPEATING THIS HERE MAKES 4 TO 14 COUNT
-	timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;
-	
-	sprintf(message,"count: %d timer: %d\n",count,timer);
-	print_msg(message);
-	*/
-	
-	HAL_DAC_Init(&hdac);
+
+
+HAL_DAC_Init(&hdac);
   HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
   HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 255);
-	
-	uint32_t sinoutput;
-	
+
+uint32_t sinoutput;
+
+//part 2.2 fill
+/*sin_LUT = malloc(sizeof(float) * 100);
+int i = 0;
+for (double rads = 2*3.14; rads < 4*3.14; rads += (2.0*3.14/100.0)) {
+sin_LUT[i] = produceSin(rads);
+i++;
+}*/
+
+//part 3 - square
+/*square_LUT = malloc(sizeof(float) * 100);
+int i = 0;
+for (double rads = 2*3.14; rads < 4*3.14; rads += (2.0*3.14/100.0)) {
+square_LUT[i] = produceSquare(rads);
+i++;
+}*/
+
+//part 3 - saw
+/*saw_LUT = malloc(sizeof(float) * 100);
+int i = 0;
+for (double rads = 2*3.14; rads < 4*3.14; rads += (2.0*3.14/100.0)) {
+saw_LUT[i] = produceSaw(rads);
+i++;
+}*/
+
+//part 3 - triangle
+triangle_LUT = malloc(sizeof(float) * 100);
+int i = 0;
+for (double rads = 2*3.14; rads < 4*3.14; rads += (2.0*3.14/100.0)) {
+triangle_LUT[i] = produceTriangle(rads);
+i++;
+}
+
+
   while (1)
   {
-	  //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    //HAL_Delay(50);
-		
-		//timer= __HAL_TIM_GET_COUNTER(&htim6);
-    //part 2.1
-		/*for(double theta=0; theta<=(2*3.1415926); theta+=0.1){
-		  //HAL_Delay(10);
-			HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
-    }*/
-		/*for(int i=0;i<1;i+=0.01){	
-			HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, squareWave(fs_terms,i));
-			HAL_Delay(1);
-		}*/
-		//part 2.2
-    for (int i=0;i<max_count;i++){
-     	//HAL_Delay(10);////mod this
-			HAL_DAC_Start(&hdac, DAC_CHANNEL_1); //non-blocking, confirm placement 
-			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
-			
-		}
-    //timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;//time to send all of one sine wave
-		//sprintf(message, "time: %d \n", timer);
-		//
-		//sprintf(message, "num_terms %d \n", fs_terms);
-		//print_msg(message); //UART transmit	
-		
-	
+//for part 1
+/*for (double x = 2*3.14; x < 4*3.14; x += 0.01) {
+double val = produceSin(x);
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, val);
+}*/
+
+//for 2.2
+/*for (int i = 0; i < 100; i++) {
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
+}*/
+
+//for 3 square
+/*for (int i = 0; i < 100; i++) {
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, square_LUT[i]);
+}*/
+
+//for 3 saw
+/*for (int i = 0; i < 100; i++) {
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, saw_LUT[i]);
+}*/
+
+//for 3 triangle
+for (int i = 0; i < 100; i++) {
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, triangle_LUT[i]);
+}
   }
-	free(sin_LUT);
 }
 #pragma GCC pop_options
+
+double produceSin(double x) {
+return 1000 * sin(x) + 1100;
+}
+
 
 
 
