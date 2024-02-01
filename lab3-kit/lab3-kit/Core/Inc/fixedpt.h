@@ -33,8 +33,8 @@ typedef int fixedpt;
 // Macros for basic arithmetic operations. //add error correction (flag?)
 #define FXD_ADD(A,B) (FXD_FROM_INT(FXD_TO_INT(A) + FXD_TO_INT(B))) //assume A and B are already in fixed pt form
 #define FXD_SUB(A,B) (FXD_FROM_INT(FXD_TO_INT(A) - FXD_TO_INT(B))) 
-#define FXD_MUL(A,B) ((fixedpt)((A)*(B)))
-#define FXD_DIV(A,B) ((fixedpt)((A)/(B)))
+#define FXD_MUL(A,B) ((fixedpt)((A)*(B))) //this is wrong
+#define FXD_DIV(A,B) ((fixedpt)((A)/(B))) //this is wrong
 
 // Other useful macros such as getting just the fractional part. 
 #define FXD_FRAC_MASK	(((fixedpt)1 << FXD_FRAC_BITS) - 1)

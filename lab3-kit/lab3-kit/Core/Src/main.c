@@ -145,14 +145,14 @@ int main(void)
   print_msg(message); //UART transmit
 	
 	//part 2.2
-	int max_count=(int) nearbyint((2*3.1415926/0.1) +1.0);
+	int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
 	//int count=0;
-	double *sin_LUT=malloc(max_count*sizeof(double));
+	double* sin_LUT=malloc(max_count*sizeof(double));
 	double theta;
-	for(int count=0; count<=(628); count++){
+	for(int count=0; count<=max_count; count++){
 		theta	=(double)count/100;
-		sin_LUT[count]=(sin(theta)+1)*4096/2;
-			
+		//sin_LUT[count]=(sin(theta)+1)*4096/2;
+		sin_LUT[count]=sin(theta); 
 			//sprintf(message,"max count: %d \n count: %d sintheta: %d\n",max_count, count, sin_LUT[count]);
 			//print_msg(message);
 	}
@@ -203,7 +203,7 @@ int main(void)
 		}*/
 		//part 2.2
     for (int i=0;i<max_count;i++){
-     	HAL_Delay(10);////mod this
+     	//HAL_Delay(10);////mod this
 			HAL_DAC_Start(&hdac, DAC_CHANNEL_1); //non-blocking, confirm placement 
 			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
 			
