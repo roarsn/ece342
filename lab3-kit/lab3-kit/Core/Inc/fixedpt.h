@@ -25,22 +25,22 @@ typedef int fixedpt;
 #endif
 
 // Macros to convert from int <-> fixed and float <-> fixed.
-#define FXD_FROM_FLOAT(T) ((fixedpt)((T)*((fixedpt)1 << FXD_FRAC_BITS)))
+#define FXD_FROM_FLOAT(T) ((fixedpt)((T)*((fixedpt)1 << FXD_FRAC_BITS))) //same as multiplying 1 by 2^fixedfracbits aka 28
 #define FXD_TO_FLOAT(T) ((float)((T)*((float)(1)/(float)(1 << FXD_FRAC_BITS))))
 #define FXD_FROM_INT(I) ((fixedpt)(I) << FXD_FRAC_BITS)
 #define FXD_TO_INT(F) ((F) >> FXD_FRAC_BITS)
 
-// Macros for basic arithmetic operations. 
-#define FXD_ADD(A,B) /* TODO */
-#define FXD_SUB(A,B) /* TODO */
-#define FXD_MUL(A,B) /* TODO */
-#define FXD_DIV(A,B) /* TODO */
+// Macros for basic arithmetic operations. //add error correction (flag?)
+#define FXD_ADD(A,B) (FXD_FROM_INT(FXD_TO_INT(A) + FXD_TO_INT(B))) //assume A and B are already in fixed pt form
+#define FXD_SUB(A,B) (FXD_FROM_INT(FXD_TO_INT(A) - FXD_TO_INT(B))) 
+#define FXD_MUL(A,B) ((fixedpt)((A)*(B)))
+#define FXD_DIV(A,B) ((fixedpt)((A)/(B)))
 
 // Other useful macros such as getting just the fractional part. 
 #define FXD_FRAC_MASK	(((fixedpt)1 << FXD_FRAC_BITS) - 1)
 #define FXD_FRAC_PART(A) ((fixedpt)(A) & FXD_FRAC_MASK)
 #define FIXEDPT_ONE	((fixedpt)((fixedpt)1 << FXD_FRAC_BITS))
-#define FIXEDPT_CONST(R) ((fixedpt)((R) * FIXEDPT_ONE + ((R) >= 0 ? 0.5 : -0.5)))
+#define FIXEDPT_CONST(R) ((fixedpt)((R) * FIXEDPT_ONE + ((R) >= 0 ? 0.5 : -0.5))) //why adding subbing .5?
 #define FIXEDPT_PI	FIXEDPT_CONST(3.14159265358979323846)
 
 #endif

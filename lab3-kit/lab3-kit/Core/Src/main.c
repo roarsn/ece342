@@ -52,12 +52,12 @@ double squareWave(int max, double x){
 double sawTooth(int max, double x){
   double fX = 0.5;
   for(int n = 1 ; n < max ; n++){
-    fX -= (1 / PI) * (1 / n) * sin(n * x)
+    fX -= (1 / PI) * (1 / n) * sin(n * x);
   }
   return fX;
 }
 
-double triangularWave(int max, double x){
+double triangleWave(int max, double x){
   double fX = 0.5;
   for(int n = 0 ; n < max ; n++){
     fX += (4 / pow(PI, 2)) * (pow(-1, n) / pow(((2*n) + 1), 2)) * sin((2*n + 1)* x);
@@ -74,7 +74,7 @@ void squareLUT(int max, double x){
 			count++;
 	}
   //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; i++){
+  for(int n = 3 ; n <= max_count ; n++){
     for (int i = 0; i < max_count; i++) {
       double square_nx = square_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * square_LUT[i];
       printf("square(%dx) at index %d: %f\n", n, i, square_nx);
@@ -88,11 +88,11 @@ void sawLUT(int max, double x){
 	int count=0;
 	double *saw_LUT=malloc(max_count*sizeof(double));
 	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			saw_LUT[count]=sawWave(0, theta);
+			saw_LUT[count]=sawTooth(0, theta);
 			count++;
 	}
   //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; i++){
+  for(int n = 3 ; n <= max_count ; n++){
     for (int i = 0; i < max_count; i++) {
       double saw_nx = saw_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * saw_LUT[i];
       printf("saw(%dx) at index %d: %f\n", n, i, saw_nx);
@@ -110,7 +110,7 @@ void triangleLUT(int max, double x){
 			count++;
 	}
   //we have LUT filled for smallest freq values of each
-  for(int n = 3 ; n <= max_count ; i++){
+  for(int n = 3 ; n <= max_count ; n++){
     for (int i = 0; i < max_count; i++) {
       double triangle_nx = triangle_LUT[i] + cos((n - 1) * 0.01) + cos((n - 1) * 0.01) * triangle_LUT[i];
       printf("triangle(%dx) at index %d: %f\n", n, i, triangle_nx);
@@ -145,15 +145,16 @@ int main(void)
   print_msg(message); //UART transmit
 	
 	//part 2.2
-	int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
-	int count=0;
+	int max_count=(int) nearbyint((2*3.1415926/0.1) +1.0);
+	//int count=0;
 	double *sin_LUT=malloc(max_count*sizeof(double));
-	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-			sin_LUT[count]=sin(theta);
+	double theta;
+	for(int count=0; count<=(628); count++){
+		theta	=(double)count/100;
+		sin_LUT[count]=(sin(theta)+1)*4096/2;
 			
-			sprintf(message,"max count: %d \n count: %d sintheta: %lf\n",max_count, count, sin_LUT[count]);
-			print_msg(message);
-			count++;
+			//sprintf(message,"max count: %d \n count: %d sintheta: %d\n",max_count, count, sin_LUT[count]);
+			//print_msg(message);
 	}
 	
 	
@@ -186,9 +187,9 @@ int main(void)
   while (1)
   {
 	  //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    HAL_Delay(50);
+    //HAL_Delay(50);
 		
-		timer= __HAL_TIM_GET_COUNTER(&htim6);
+		//timer= __HAL_TIM_GET_COUNTER(&htim6);
     //part 2.1
 		/*for(double theta=0; theta<=(2*3.1415926); theta+=0.1){
 		  //HAL_Delay(10);
@@ -207,10 +208,10 @@ int main(void)
 			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
 			
 		}
-    timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;//time to send all of one sine wave
+    //timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;//time to send all of one sine wave
 		//sprintf(message, "time: %d \n", timer);
 		//
-		sprintf(message, "num_terms %d \n", fs_terms);
+		//sprintf(message, "num_terms %d \n", fs_terms);
 		//print_msg(message); //UART transmit	
 		
 	
