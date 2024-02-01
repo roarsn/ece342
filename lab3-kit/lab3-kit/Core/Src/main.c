@@ -30,11 +30,20 @@
   * @brief  The application entry point.
   * @retval int
   */
+	
+#define PI 3.1415926
 
-extern int *sin_LUT; 
+extern double *sin_LUT; 
 
-#define PI = 3.1415926;
+int8_t fs_terms=1; //make sure this works with xx_it extern var
 
+double squareWave(int max, double x){
+  double fX = 0.5;
+  for(int n = 0 ; n < max ; n++){
+    fX += (2 / PI) * (1 / ((2 * n) + 1)) * sin(((2 * n)+1)*x);
+  }
+  return fX;
+}
 
 
 int main(void)
@@ -51,6 +60,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART3_Init();
 	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	fs_terms=1;
 	
 	char message[100];
   sprintf(message, "Printing test\n");
@@ -59,11 +69,11 @@ int main(void)
 	//part 2.2
 	int max_count=(int) nearbyint((2*3.1415926/0.01) +1.0);
 	int count=0;
-	int *sin_LUT=malloc(max_count*sizeof(double));
+	double *sin_LUT=malloc(max_count*sizeof(double));
 	for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
 			sin_LUT[count]=sin(theta);
 			
-			sprintf(message,"max count: %d \n count: %d sintheta: %lf\n",max_count, count, sin(theta));
+			sprintf(message,"max count: %d \n count: %d sintheta: %lf\n",max_count, count, sin_LUT[count]);
 			print_msg(message);
 			count++;
 	}
@@ -97,20 +107,33 @@ int main(void)
 	
   while (1)
   {
-	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  //HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     HAL_Delay(50);
-		HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+		
 		timer= __HAL_TIM_GET_COUNTER(&htim6);
-    //I'm sorry the way you had your for loops setup was confusing me
-		for(double theta=0; theta<=(2*3.1415926); theta+=0.01){
-		  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
-    }
-    // for (int i=0;i<max_count;i++){
-    // 	HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
-		// }
-    timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;
-		sprintf(message, "time: %d \n", timer);
-		print_msg(message); //UART transmit	
+    //part 2.1
+		/*for(double theta=0; theta<=(2*3.1415926); theta+=0.1){
+		  //HAL_Delay(10);
+			HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin(theta)); //uint32_t data
+    }*/
+		/*for(int i=0;i<1;i+=0.01){	
+			HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, squareWave(fs_terms,i));
+			HAL_Delay(1);
+		}*/
+		//part 2.2
+    for (int i=0;i<max_count;i++){
+     	HAL_Delay(10);////mod this
+			HAL_DAC_Start(&hdac, DAC_CHANNEL_1); //non-blocking, confirm placement 
+			HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, sin_LUT[i]);
+			
+		}
+    timer= __HAL_TIM_GET_COUNTER(&htim6) - timer;//time to send all of one sine wave
+		//sprintf(message, "time: %d \n", timer);
+		//
+		sprintf(message, "num_terms %d \n", fs_terms);
+		//print_msg(message); //UART transmit	
 		
 	
   }
@@ -120,11 +143,5 @@ int main(void)
 
 
 
-double squareWave(int max, double x){
-  double fX = 0.5;
-  for(int n = 0 ; n < max ; n++){
-    fX += (2 / PI) * (1 / ((2 * n) + 1)) * sin(((2 * n)+1)*x);
-  }
-  return fX;
-}
+
 

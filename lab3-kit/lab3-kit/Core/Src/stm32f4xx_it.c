@@ -57,7 +57,7 @@
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-
+extern int8_t fs_terms;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -206,7 +206,16 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 	
   /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(USER_Btn_Pin);
+  	
+	 if (__HAL_GPIO_EXTI_GET_FLAG(USER_Btn_Pin)) {//redundant check to make sure button is pressed
+    // Your code here
+		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+		fs_terms++;
+		if (fs_terms==7)
+			fs_terms=1;
+  }
+
+  HAL_GPIO_EXTI_IRQHandler(USER_Btn_Pin); //clears interrupt (?)
 	
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
