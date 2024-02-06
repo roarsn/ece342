@@ -111,7 +111,13 @@ Section Cross References
     dfr0151.o(.text.rtc_set_time) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Write) for HAL_I2C_Mem_Write
     dfr0151.o(.text.rtc_set_time) refers to config.o(.text.Error_Handler) for Error_Handler
     dfr0151.o(.ARM.exidx.text.rtc_set_time) refers to dfr0151.o(.text.rtc_set_time) for [Anonymous Symbol]
+    dfr0151.o(.text.rtc_get_date) refers to config.o(.bss.hi2c1) for hi2c1
+    dfr0151.o(.text.rtc_get_date) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Read) for HAL_I2C_Mem_Read
+    dfr0151.o(.text.rtc_get_date) refers to config.o(.text.Error_Handler) for Error_Handler
     dfr0151.o(.ARM.exidx.text.rtc_get_date) refers to dfr0151.o(.text.rtc_get_date) for [Anonymous Symbol]
+    dfr0151.o(.text.rtc_set_date) refers to config.o(.bss.hi2c1) for hi2c1
+    dfr0151.o(.text.rtc_set_date) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Write) for HAL_I2C_Mem_Write
+    dfr0151.o(.text.rtc_set_date) refers to config.o(.text.Error_Handler) for Error_Handler
     dfr0151.o(.ARM.exidx.text.rtc_set_date) refers to dfr0151.o(.text.rtc_set_date) for [Anonymous Symbol]
     dfr0151.o(.text.eeprom_write) refers to config.o(.bss.hi2c1) for hi2c1
     dfr0151.o(.text.eeprom_write) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Write) for HAL_I2C_Mem_Write
@@ -121,6 +127,9 @@ Section Cross References
     dfr0151.o(.text.eeprom_read) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Read) for HAL_I2C_Mem_Read
     dfr0151.o(.text.eeprom_read) refers to config.o(.text.Error_Handler) for Error_Handler
     dfr0151.o(.ARM.exidx.text.eeprom_read) refers to dfr0151.o(.text.eeprom_read) for [Anonymous Symbol]
+    dfr0151.o(.text.rtc_store_time) refers to config.o(.bss.hi2c1) for hi2c1
+    dfr0151.o(.text.rtc_store_time) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Write) for HAL_I2C_Mem_Write
+    dfr0151.o(.text.rtc_store_time) refers to config.o(.text.Error_Handler) for Error_Handler
     dfr0151.o(.ARM.exidx.text.rtc_store_time) refers to dfr0151.o(.text.rtc_store_time) for [Anonymous Symbol]
     dfr0151.o(.text.rtc_retrieve_time) refers to config.o(.bss.hi2c1) for hi2c1
     dfr0151.o(.text.rtc_retrieve_time) refers to stm32f4xx_hal_i2c.o(.text.HAL_I2C_Mem_Read) for HAL_I2C_Mem_Read
@@ -1021,9 +1030,9 @@ Removing Unused input sections from the image.
     Removing dfr0151.o(.ARM.exidx.text.rtc_get_time), (8 bytes).
     Removing dfr0151.o(.text.rtc_set_time), (206 bytes).
     Removing dfr0151.o(.ARM.exidx.text.rtc_set_time), (8 bytes).
-    Removing dfr0151.o(.text.rtc_get_date), (2 bytes).
+    Removing dfr0151.o(.text.rtc_get_date), (254 bytes).
     Removing dfr0151.o(.ARM.exidx.text.rtc_get_date), (8 bytes).
-    Removing dfr0151.o(.text.rtc_set_date), (2 bytes).
+    Removing dfr0151.o(.text.rtc_set_date), (266 bytes).
     Removing dfr0151.o(.ARM.exidx.text.rtc_set_date), (8 bytes).
     Removing dfr0151.o(.text.eeprom_write), (52 bytes).
     Removing dfr0151.o(.ARM.exidx.text.eeprom_write), (8 bytes).
@@ -1761,7 +1770,7 @@ Removing Unused input sections from the image.
     Removing system_stm32f4xx.o(.text.SystemCoreClockUpdate), (134 bytes).
     Removing system_stm32f4xx.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
 
-777 unused section(s) (total 53370 bytes) removed from the image.
+777 unused section(s) (total 53886 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2013,15 +2022,15 @@ Image Symbol Table
     [Anonymous Symbol]                       0x08003434   Section        0  stm32f4xx_ll_usb.o(.text.USB_SetCurrentMode)
     [Anonymous Symbol]                       0x08003498   Section        0  stm32f4xx_it.o(.text.UsageFault_Handler)
     [Anonymous Symbol]                       0x0800349c   Section        0  main.o(.text.main)
-    [Anonymous Symbol]                       0x080035d4   Section        0  config.o(.text.print_msg)
-    [Anonymous Symbol]                       0x080035f4   Section        0  dfr0151.o(.text.rtc_get_time)
-    [Anonymous Symbol]                       0x080036b8   Section        0  dfr0151.o(.text.rtc_init)
-    [Anonymous Symbol]                       0x080036f4   Section        0  dfr0151.o(.text.rtc_retrieve_time)
-    $v0                                      0x080037f8   Number         0  fpinit.o(x$fpl$fpinit)
-    [Anonymous Symbol]                       0x080037f8   Section        0  dfr0151.o(.text.rtc_store_time)
-    x$fpl$fpinit                             0x080037f8   Section       26  fpinit.o(x$fpl$fpinit)
-    .L.str.2                                 0x0800382a   Data           2  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800382a   Section        0  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x080035d8   Section        0  config.o(.text.print_msg)
+    [Anonymous Symbol]                       0x080035f8   Section        0  dfr0151.o(.text.rtc_get_time)
+    [Anonymous Symbol]                       0x080036bc   Section        0  dfr0151.o(.text.rtc_init)
+    [Anonymous Symbol]                       0x080036f8   Section        0  dfr0151.o(.text.rtc_retrieve_time)
+    [Anonymous Symbol]                       0x080037fc   Section        0  dfr0151.o(.text.rtc_store_time)
+    $v0                                      0x0800383c   Number         0  fpinit.o(x$fpl$fpinit)
+    x$fpl$fpinit                             0x0800383c   Section       26  fpinit.o(x$fpl$fpinit)
+    .L.str.2                                 0x0800386e   Data           2  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800386e   Section        0  main.o(.rodata.str1.1)
     .L_MergedGlobals                         0x20000000   Data           8  stm32f4xx_hal.o(.data..L_MergedGlobals)
     [Anonymous Symbol]                       0x20000000   Section        0  stm32f4xx_hal.o(.data..L_MergedGlobals)
     .bss                                     0x20000010   Section       96  libspace.o(.bss)
@@ -2292,19 +2301,19 @@ Image Symbol Table
     USB_DisableGlobalInt                     0x08003425   Thumb Code    14  stm32f4xx_ll_usb.o(.text.USB_DisableGlobalInt)
     USB_SetCurrentMode                       0x08003435   Thumb Code   100  stm32f4xx_ll_usb.o(.text.USB_SetCurrentMode)
     UsageFault_Handler                       0x08003499   Thumb Code     2  stm32f4xx_it.o(.text.UsageFault_Handler)
-    main                                     0x0800349d   Thumb Code   224  main.o(.text.main)
-    print_msg                                0x080035d5   Thumb Code    30  config.o(.text.print_msg)
-    rtc_get_time                             0x080035f5   Thumb Code   196  dfr0151.o(.text.rtc_get_time)
-    rtc_init                                 0x080036b9   Thumb Code    58  dfr0151.o(.text.rtc_init)
-    rtc_retrieve_time                        0x080036f5   Thumb Code   258  dfr0151.o(.text.rtc_retrieve_time)
-    _fp_init                                 0x080037f9   Thumb Code    26  fpinit.o(x$fpl$fpinit)
-    rtc_store_time                           0x080037f9   Thumb Code     0  dfr0151.o(.text.rtc_store_time)
-    __fplib_config_fpu_vfp                   0x08003811   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x08003811   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    AHBPrescTable                            0x08003812   Data          16  system_stm32f4xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x08003822   Data           8  system_stm32f4xx.o(.rodata.APBPrescTable)
-    Region$$Table$$Base                      0x0800382c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800384c   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x0800349d   Thumb Code   228  main.o(.text.main)
+    print_msg                                0x080035d9   Thumb Code    30  config.o(.text.print_msg)
+    rtc_get_time                             0x080035f9   Thumb Code   196  dfr0151.o(.text.rtc_get_time)
+    rtc_init                                 0x080036bd   Thumb Code    58  dfr0151.o(.text.rtc_init)
+    rtc_retrieve_time                        0x080036f9   Thumb Code   258  dfr0151.o(.text.rtc_retrieve_time)
+    rtc_store_time                           0x080037fd   Thumb Code    64  dfr0151.o(.text.rtc_store_time)
+    _fp_init                                 0x0800383d   Thumb Code    26  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x08003855   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x08003855   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    AHBPrescTable                            0x08003856   Data          16  system_stm32f4xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x08003866   Data           8  system_stm32f4xx.o(.rodata.APBPrescTable)
+    Region$$Table$$Base                      0x08003870   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08003890   Number         0  anon$$obj.o(Region$$Table)
     uwTickFreq                               0x20000000   Data           1  stm32f4xx_hal.o(.data..L_MergedGlobals)
     uwTickPrio                               0x20000004   Data           4  stm32f4xx_hal.o(.data..L_MergedGlobals)
     SystemCoreClock                          0x20000008   Data           4  system_stm32f4xx.o(.data.SystemCoreClock)
@@ -2327,9 +2336,9 @@ Memory Map of the image
 
   Image Entry point : 0x080001c5
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00003860, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000038a0, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000384c, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00003890, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2504,36 +2513,36 @@ Memory Map of the image
     0x08003434   0x08003434   0x00000064   Code   RO          923    .text.USB_SetCurrentMode  stm32f4xx_ll_usb.o
     0x08003498   0x08003498   0x00000002   Code   RO           30    .text.UsageFault_Handler  stm32f4xx_it.o
     0x0800349a   0x0800349a   0x00000002   PAD
-    0x0800349c   0x0800349c   0x00000138   Code   RO           11    .text.main          main.o
-    0x080035d4   0x080035d4   0x0000001e   Code   RO          117    .text.print_msg     config.o
-    0x080035f2   0x080035f2   0x00000002   PAD
-    0x080035f4   0x080035f4   0x000000c4   Code   RO           81    .text.rtc_get_time  dfr0151.o
-    0x080036b8   0x080036b8   0x0000003a   Code   RO           79    .text.rtc_init      dfr0151.o
-    0x080036f2   0x080036f2   0x00000002   PAD
-    0x080036f4   0x080036f4   0x00000102   Code   RO           95    .text.rtc_retrieve_time  dfr0151.o
-    0x080037f6   0x080037f6   0x00000002   PAD
-    0x080037f8   0x080037f8   0x00000000   Code   RO           93    .text.rtc_store_time  dfr0151.o
-    0x080037f8   0x080037f8   0x0000001a   Code   RO         1195    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x08003812   0x08003812   0x00000010   Data   RO         1024    .rodata.AHBPrescTable  system_stm32f4xx.o
-    0x08003822   0x08003822   0x00000008   Data   RO         1025    .rodata.APBPrescTable  system_stm32f4xx.o
-    0x0800382a   0x0800382a   0x00000002   Data   RO           13    .rodata.str1.1      main.o
-    0x0800382c   0x0800382c   0x00000020   Data   RO         1256    Region$$Table       anon$$obj.o
+    0x0800349c   0x0800349c   0x0000013c   Code   RO           11    .text.main          main.o
+    0x080035d8   0x080035d8   0x0000001e   Code   RO          117    .text.print_msg     config.o
+    0x080035f6   0x080035f6   0x00000002   PAD
+    0x080035f8   0x080035f8   0x000000c4   Code   RO           81    .text.rtc_get_time  dfr0151.o
+    0x080036bc   0x080036bc   0x0000003a   Code   RO           79    .text.rtc_init      dfr0151.o
+    0x080036f6   0x080036f6   0x00000002   PAD
+    0x080036f8   0x080036f8   0x00000102   Code   RO           95    .text.rtc_retrieve_time  dfr0151.o
+    0x080037fa   0x080037fa   0x00000002   PAD
+    0x080037fc   0x080037fc   0x00000040   Code   RO           93    .text.rtc_store_time  dfr0151.o
+    0x0800383c   0x0800383c   0x0000001a   Code   RO         1195    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x08003856   0x08003856   0x00000010   Data   RO         1024    .rodata.AHBPrescTable  system_stm32f4xx.o
+    0x08003866   0x08003866   0x00000008   Data   RO         1025    .rodata.APBPrescTable  system_stm32f4xx.o
+    0x0800386e   0x0800386e   0x00000002   Data   RO           13    .rodata.str1.1      main.o
+    0x08003870   0x08003870   0x00000020   Data   RO         1256    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003850, Size: 0x00000c20, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08003890, Size: 0x00000c20, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08003850   0x00000008   Data   RW          660    .data..L_MergedGlobals  stm32f4xx_hal.o
-    0x20000008   0x08003858   0x00000004   Data   RW         1023    .data.SystemCoreClock  system_stm32f4xx.o
-    0x2000000c   0x0800385c   0x00000004   PAD
+    0x20000000   0x08003890   0x00000008   Data   RW          660    .data..L_MergedGlobals  stm32f4xx_hal.o
+    0x20000008   0x08003898   0x00000004   Data   RW         1023    .data.SystemCoreClock  system_stm32f4xx.o
+    0x2000000c   0x0800389c   0x00000004   PAD
     0x20000010        -       0x00000060   Zero   RW         1121    .bss                c_w.l(libspace.o)
     0x20000070        -       0x00000004   Zero   RW           15    .bss..L_MergedGlobals  main.o
     0x20000074        -       0x00000054   Zero   RW          119    .bss.hi2c1          config.o
     0x200000c8        -       0x0000050c   Zero   RW          121    .bss.hpcd_USB_OTG_FS  config.o
     0x200005d4        -       0x00000044   Zero   RW          120    .bss.huart3         config.o
     0x20000618        -       0x00000004   Zero   RW          659    .bss.uwTick         stm32f4xx_hal.o
-    0x2000061c   0x0800385c   0x00000004   PAD
+    0x2000061c   0x0800389c   0x00000004   PAD
     0x20000620        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f446xx.o
     0x20000820        -       0x00000400   Zero   RW            1    STACK               startup_stm32f446xx.o
 
@@ -2546,8 +2555,8 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        692          0          0          0       1444      12708   config.o
-       512          0          0          0          0       5303   dfr0151.o
-       312         88          2          0          4       1527   main.o
+       576          0          0          0          0       7279   dfr0151.o
+       316         88          2          0          4       1528   main.o
         64         26        452          0       1536        880   startup_stm32f446xx.o
        204          0          0          8          4       7525   stm32f4xx_hal.o
        196          0          0          0          0      10601   stm32f4xx_hal_cortex.o
@@ -2564,7 +2573,7 @@ Image component sizes
         18          0         24          4          0       2768   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-     12660        118        510         12       2996     224494   Object Totals
+     12728        118        510         12       2996     226471   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         86          0          0          0          8          0   (incl. Padding)
 
@@ -2627,15 +2636,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     13902        162        510         12       3092     225106   Grand Totals
-     13902        162        510         12       3092     225106   ELF Image Totals
-     13902        162        510         12          0          0   ROM Totals
+     13970        162        510         12       3092     227083   Grand Totals
+     13970        162        510         12       3092     227083   ELF Image Totals
+     13970        162        510         12          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                14412 (  14.07kB)
+    Total RO  Size (Code + RO Data)                14480 (  14.14kB)
     Total RW  Size (RW Data + ZI Data)              3104 (   3.03kB)
-    Total ROM Size (Code + RO Data + RW Data)      14424 (  14.09kB)
+    Total ROM Size (Code + RO Data + RW Data)      14492 (  14.15kB)
 
 ==============================================================================
 

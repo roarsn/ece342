@@ -68,6 +68,7 @@ int main(void)
 		if(flag){ //
 			//rtc_set_time(hour,min,sec);
 			rtc_store_time(hour,min,sec);
+			HAL_Delay(10);
 			flag=0;
 		}
   }
