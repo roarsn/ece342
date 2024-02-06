@@ -62,11 +62,20 @@ void rtc_set_time(uint8_t hour,uint8_t min,uint8_t sec)
 void rtc_get_date(uint8_t *week_day,uint8_t *day,uint8_t *month,uint8_t *year)
 {
   // Your code here
+  *week_day=bcd2bin(rtc_read(0x3));
+	*day=bcd2bin(rtc_read(0x4));
+	*month=bcd2bin(rtc_read(0x5));
+  *year=bcd2bin(rtc_read(0x6));
+
 }
 
 void rtc_set_date(uint8_t week_day,uint8_t day,uint8_t month,uint8_t year)
 {
   // Your code here
+  rtc_write(0x3,bin2bcd(week_day));
+	rtc_write(0x4,bin2bcd(day));
+	rtc_write(0x5,bin2bcd(month));
+	rtc_write(0x6,bin2bcd(year));
 }
 
 void eeprom_write(uint16_t address, uint8_t *data, uint16_t size) {
