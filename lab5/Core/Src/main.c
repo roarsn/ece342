@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include "config.h"
 #include "ov7670.h"
+#include <stdint.h>
 
 
 /* USER CODE BEGIN PV */
@@ -70,19 +71,7 @@ int main(void)
   ov7670_capture(snapshot_buff);
 
   // Your startup code here
-  // Start the PWM timer for the camera clock
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-
-  // Initialize the OV7670 camera
-  ov7670_init();
-  // Additional delay to ensure camera module is ready after initialization
-  HAL_Delay(100); // 100 ms delay
-
-  // Optionally, send a message over UART to indicate the system is ready
-  char initMsg[] = "System Initialized and Ready\r\n";
-  HAL_UART_Transmit(&huart3, (uint8_t *)initMsg, strlen(initMsg), HAL_MAX_DELAY);
   
-
   while (1)
   {
     // Your code here
