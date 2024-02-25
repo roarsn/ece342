@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "config.h"
 #include "ov7670.h"
@@ -205,4 +206,33 @@ void ov7670_capture(uint16_t *buff){
   // Your code here
 
   //
+}
+
+uint8_t ov7670_init(void) {
+
+  uint8_t val;
+  char msg[100];
+
+  //Read product ID to verify communication
+  print_msg("init_test\r\n");
+  val = ov7670_read(0x0A); // Read product ID register
+  
+  if (val != 0x76) {
+      sprintf(msg, "Wrong product id (0x%x)\r\n", val);
+      print_msg(msg);
+      return 1; // Return error if product ID does not match expected value
+  }
+
+  // Loop through the OV7670_reg array
+  for (int i = 0; i < OV7670_REG_NUM; i++) {
+    if (ov7670_write(OV7670_reg[i][0], OV7670_reg[i][1]) != HAL_OK) {
+      sprintf(msg, "Failed to write reg 0x%x\r\n", OV7670_reg[i][0]);
+      print_msg(msg);
+      return 1; // Return error if write operation fails
+    }
+    HAL_Delay(10); // Delay between writes as specified
+  }
+
+  return 0; // Return success
+
 }
