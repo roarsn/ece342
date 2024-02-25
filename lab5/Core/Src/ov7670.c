@@ -8,6 +8,9 @@ extern I2C_HandleTypeDef hi2c2;
 extern DCMI_HandleTypeDef hdcmi;
 extern DMA_HandleTypeDef hdma_dcmi;
 
+#define OV7670_ADDR 0x42 //not sure about this
+
+
 
 const uint8_t OV7670_reg[OV7670_REG_NUM][2] = {
   // Array format: {<reg address>, <reg_value> }
@@ -177,13 +180,18 @@ uint8_t ov7670_init(void){
 
 uint8_t ov7670_read(uint8_t reg){
   // Your code here
-
+  uint8_t value;
+  HAL_I2C_Master_Transmit(&hi2c2, OV7670_ADDR << 1, &reg, 1, HAL_MAX_DELAY);
+  HAL_I2C_Master_Receive(&hi2c2, (OV7670_ADDR << 1) | 0x01, &value, 1, HAL_MAX_DELAY);
+  return value;
   // 
 }
 
 HAL_StatusTypeDef ov7670_write(uint8_t reg,uint8_t val){
   // Your code here
-
+  uint8_t data[2] = {reg, val};
+  // Assume I2C address is shifted left by 1
+  return HAL_I2C_Master_Transmit(&hi2c2, OV7670_ADDR << 1, data, 2, HAL_MAX_DELAY);
   //
 }
 
