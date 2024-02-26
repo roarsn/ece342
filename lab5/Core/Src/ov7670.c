@@ -206,12 +206,15 @@ HAL_StatusTypeDef ov7670_write(uint8_t reg,uint8_t val){
 
 void ov7670_snapshot(uint16_t *buff){
   // Your code here
-
+  HAL_DCMI_Start_DMA(&hdcmi, DCMI_MODE_SNAPSHOT, (uint32_t)*buff, IMG_ROWS * IMG_COLS / 2);
   //
 }
 
 void ov7670_capture(uint16_t *buff){
   // Your code here
-
+  HAL_DCMI_Start_DMA(&hdcmi, DCMI_MODE_CONTINUOUS, (uint32_t)*buff, IMG_ROWS * IMG_COLS / 2);
   //
 }
+
+//for last two functions not sure if buff shjould be as it is but got an error otherwise
+
