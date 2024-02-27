@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab4/Core/Src",
-      "program": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab4/Core/Src/build/Debug/outDebug"
+      "cwd": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab5/Core/Src",
+      "program": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab5/Core/Src/build/Debug/outDebug"
     }
   ]
 }
