@@ -44,6 +44,8 @@ uint8_t dma_flag = 0;
 // Your function definitions here
 void print_buf(void);
 
+#define UART_TX_CHUNK_SIZE 64
+
 
 int main(void)
 {
@@ -71,14 +73,22 @@ int main(void)
   ov7670_capture(snapshot_buff);
 
   // Your startup code here
+  sprintf(msg, "System initialized and ready for capturing.\r\n");
+  HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
 
   while (1)
   {
     // Your code here
     if (HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin)) {
       HAL_Delay(100);  // debounce
+    
 
-      print_msg("Snap!\r\n");
+      print_msg("Snap!\r\n"); //shown at button press
+
+      // Capture an image and store it in snapshot_buff
+      ov7670_capture(snapshot_buff);
+      print_buf(); //to be implemented
+
     }
   }
 }
@@ -87,4 +97,22 @@ int main(void)
 void print_buf() {
   // Send image data through serial port.
   // Your code here
+
+  // assuming UART buffer is large enough to handle the data
+
+  const uint8_t *dataPtr = (const uint8_t *)snapshot_buff;
+  size_t dataLen = sizeof(snapshot_buff);
+
+  HAL_UART_Transmit(&huart3, (uint8_t *)PREAMBLE, strlen(PREAMBLE), HAL_MAX_DELAY);
+
+  // Transmit the image data in chunks
+  for (size_t i = 0; i < dataLen; i += UART_TX_CHUNK_SIZE) {
+    size_t chunkSize = ((dataLen - i) < UART_TX_CHUNK_SIZE) ? (dataLen - i) : UART_TX_CHUNK_SIZE;
+    HAL_UART_Transmit(&huart3, &dataPtr[i], chunkSize, HAL_MAX_DELAY);
+  }
+
+  // Transmit the suffix
+  HAL_UART_Transmit(&huart3, (uint8_t *)SUFFIX, strlen(SUFFIX), HAL_MAX_DELAY);
+
+
 }
