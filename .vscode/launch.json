@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab0",
-      "program": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab0/build/Debug/outDebug"
+      "cwd": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab0/blinky/Core/Src",
+      "program": "/Users/ronnibijvoet/Documents/GitHub/ece342/lab0/blinky/Core/Src/build/Debug/outDebug"
     }
   ]
 }
